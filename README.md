@@ -1,39 +1,136 @@
-**AxelSMOTE: Axelrod-Guided Synthetic Oversampling for Imbalanced Learning**
+# AxelSMOTE: Axelrod-Guided Synthetic Oversampling for Imbalanced Learning
 
-**📌 Project OverviewIn** real-world machine learning tasks (e.g., medical diagnoses, software defect prediction), dataset imbalance causes standard classifiers to bias toward the majority class while failing to spot critical minority-class instances.AxelSMOTE is a novel synthetic oversampling framework inspired by Axelrod's Cultural Dissemination Model. Rather than relying purely on simple distance interpolation, AxelSMOTE models feature interaction using:Feature Grouping & Trait Alignment: Partitioning features to compute structured similarity.Probabilistic Feature Exchange: Exchanging feature traits based on agent similarity thresholds.Gaussian Noise Injection: Adding slight variance to prevent deterministic over-fitting along exact linear interpolation lines.📊 Key Results & Comparative SummaryThe framework was benchmarked against standard SMOTE and Class Weight approaches across four real-world datasets (Wisconsin Breast Cancer, KC1, ADS, ILPD) using Logistic Regression, Random Forest, and Support Vector Machines (SVM) across 10 random seeds.MethodMinority F1-ScoreMinority PrecisionMinority RecallPR-AUCAvg Execution Time (s)Class Weight0.7066——0.73320.74Standard SMOTE0.7082—0.8390—1.09AxelSMOTE (Proposed)0.71110.6464——4.31Key TakeawaysClassification Balance: AxelSMOTE achieved the highest overall Minority F1-Score (0.7111) and Precision (0.6464), making it effective at reducing false positive rates in rare event detection.Computational Cost: AxelSMOTE takes ~4.31 seconds per run due to feature-matching and similarity calculations, introducing a speed-vs-precision trade-off compared to basic SMOTE (1.09s).
+## 📌 Project Overview
 
-**📁 Repository StructurePlaintext.**
-├── appendix/                   # Supplemental sections & SDG goal mappings
-├── chapters/
-│   ├── chapter1_introduction.tex         # Background, problem statement, & objectives
-│   ├── chapter2_literature_review.tex    # Literature review (SMOTE, ADASYN, Axelrod)
-│   ├── chapter3_proposed_methodology.tex # AxelSMOTE algorithm formulation
-│   ├── chapter4_system_design.tex        # System architecture & pipeline
-│   ├── chapter5_implementation.tex       # Experimental setup & parameters
-│   ├── chapter6_results_discussion.tex   # Quantitative evaluation & benchmarking
-│   └── chapter7_conclusion.tex           # Findings, limitations, & future work
-├── figures/                    # System diagrams & performance plots
-├── frontmatter/                # Title page, abstract, certificate, logbook
-├── main.tex                    # Master LaTeX file
-├── project_details.tex         # Team info, supervisor, & course details
-└── references.bib              # BibTeX citation database
-**
-**🛠️ Installation & Setup1****. Running the LaTeX Documentation (Overleaf / Local TeX)Overleaf: Import this repository as a .zip or link it directly to your GitHub repository. Ensure the compiler is set to pdfLaTeX or XeLaTeX with main.tex marked as the root document.Local LaTeX Engine:Bashpdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
-🔬 AxelSMOTE Core Pipeline AlgorithmPlaintextInput: Minority Class Samples (S_min), Similarity Threshold (θ), Noise Factor (σ)
-Output: Synthetic Minority Samples (S_synth)
+Class imbalance is a common problem in machine learning where one class has significantly more samples than another. This often causes machine learning models to favour the majority class and perform poorly when identifying minority-class instances.
 
-1. Group input features into trait vectors.
-2. For each sample x_i in S_min:
-    a. Find k-nearest neighbors in S_min.
-    b. Compute cultural/trait similarity S(x_i, x_j).
-    c. If S(x_i, x_j) >= θ:
-        i. Perform probabilistic feature exchange between x_i and x_j.
-        ii. Inject small Gaussian noise N(0, σ^2).
-    d. Append generated sample to S_synth.
-3. Return S_synth.
-🎯 Sustainable Development Goals (SDGs)This research aligns with the following UN Sustainable Development Goals:SDG 3: Good Health & Well-being: Enhanced diagnostic precision on medical datasets like Wisconsin Breast Cancer and ILPD.SDG 8: Decent Work & Economic Growth: Improved automated software bug prediction (KC1 dataset).SDG 9: Industry, Innovation & Infrastructure: Advanced algorithmic techniques for imbalanced datasets.
-**📜 Authors & AcknowledgmentsDepartment: Department of AI & DS,
-VESITProject Type: Mini Project Report**
+**AxelSMOTE** is a synthetic oversampling approach inspired by Axelrod's Cultural Dissemination Model. It aims to address class imbalance by generating synthetic minority-class samples through feature interactions, probabilistic feature exchange, and controlled noise injection.
+
+Unlike traditional oversampling techniques that mainly rely on distance-based interpolation, AxelSMOTE introduces a structured approach to feature-level interaction while generating new samples.
+
+## 🎯 Objectives
+
+- Understand the challenges associated with imbalanced datasets.
+- Study and implement the AxelSMOTE oversampling approach.
+- Generate synthetic minority-class samples.
+- Compare AxelSMOTE with conventional techniques such as SMOTE and Class Weighting.
+- Evaluate the impact of oversampling on classification performance.
+- Analyse the trade-off between classification performance and computational time.
+
+## 🧠 About AxelSMOTE
+
+AxelSMOTE draws inspiration from Axelrod's Cultural Dissemination Model, where agents interact and exchange traits based on their similarity.
+
+The approach incorporates the following concepts:
+
+1. **Feature Grouping and Trait Alignment:** Input features are organised into groups to represent structured feature relationships.
+
+2. **Probabilistic Feature Exchange:** Feature values are exchanged between similar minority-class samples based on a similarity threshold.
+
+3. **Gaussian Noise Injection:** A small amount of Gaussian noise is introduced during synthetic sample generation to improve variation and reduce repetitive patterns.
+
+4. **Synthetic Sample Generation:** Newly generated samples are added to the minority class to reduce class imbalance.
+
+## ⚙️ Methodology
+
+The general workflow followed in the project is:
+
+1. Load the selected imbalanced datasets.
+2. Perform data preprocessing and identify minority and majority classes.
+3. Apply the AxelSMOTE oversampling technique to generate synthetic minority samples.
+4. Prepare balanced datasets using alternative approaches such as SMOTE and Class Weighting.
+5. Train classification models on the resulting datasets.
+6. Evaluate and compare the performance using suitable classification metrics.
+7. Analyse the results across different experimental runs.
+
+## 📊 Experimental Setup
+
+The project explores the performance of different imbalance-handling approaches using the following classification algorithms:
+
+- Logistic Regression
+- Random Forest
+- Support Vector Machine (SVM)
+
+### Oversampling and Imbalance Handling Techniques
+
+- AxelSMOTE (Proposed Approach)
+- SMOTE
+- Class Weighting
+
+### Evaluation Metrics
+
+The techniques are evaluated using:
+
+- Minority Class Precision
+- Minority Class Recall
+- Minority Class F1-Score
+- Precision-Recall AUC (PR-AUC)
+- Execution Time
+
+These metrics help assess classification performance, particularly the model's ability to identify minority-class instances.
+
+## 📁 Repository Structure
+
+```text
+AxelSMOTE_ML/
+│
+├── AxelSMOTE_Master (1).ipynb
+│   └── Main implementation and experiments
+│
+└── README.md
+    └── Project documentation
+```
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/vranin/AxelSMOTE_ML.git
+```
+
+### 2. Navigate to the Project Directory
+
+```bash
+cd AxelSMOTE_ML
+```
+
+### 3. Open the Notebook
+
+Open the notebook using Jupyter Notebook or Google Colab.
+
+```bash
+jupyter notebook
+```
+
+### 4. Execute the Notebook
+
+Open `AxelSMOTE_Master (1).ipynb` and execute the cells sequentially to explore the implementation and experiments.
+
+Install any required Python libraries mentioned in the notebook before execution.
+
+## 🌍 Sustainable Development Goals (SDGs)
+
+The project is associated with the following Sustainable Development Goals:
+
+- **SDG 3 – Good Health and Well-being:** Improved minority-class identification can support machine learning applications in medical diagnosis.
+- **SDG 8 – Decent Work and Economic Growth:** Better classification of software defects can contribute to improved software quality.
+- **SDG 9 – Industry, Innovation and Infrastructure:** Explores innovative machine learning techniques for handling imbalanced datasets.
+
+## 👩‍💻 Contributors
+
+- **Tooba Siddeeqah**
+- **Kashish Vallecha**
+
+Department of Artificial Intelligence and Data Science  
+Vivekanand Education Society's Institute of Technology (VESIT)
+
+## 📚 References
+
+- Axelrod, R. (1997). The Dissemination of Culture: A Model with Local Convergence and Global Polarization.
+- AxelSMOTE: Axelrod-Guided Synthetic Oversampling for Imbalanced Learning.
+- Chawla, N. V., et al. (2002). SMOTE: Synthetic Minority Over-sampling Technique. Journal of Artificial Intelligence Research.
+
+## 📜 License
+
+This repository is intended for academic and research purposes. Please refer to the original repository and associated research paper for attribution and usage conditions.
